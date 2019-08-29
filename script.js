@@ -33,6 +33,7 @@ function update() {
   winCoins()
   winStars()
   stopFall()
+  stopFirsts()
   generateBubble()
   drawBubbles()
   generateStars()
@@ -47,7 +48,7 @@ function start() {
 function updateScore() {
   ctx.font = '30px Lexend Deca'
   ctx.fillStyle = 'white'
-  ctx.fillText(`Score : ${score}`, 130, 60)
+  ctx.fillText(`Score : ${score}`, 130, 75)
 }
 
 function clearCanvas() {
@@ -77,12 +78,12 @@ class Board {
   }
 }
 
-class scoreBoard {
+class ScoreBoard {
   constructor() {
     this.x = 40
-    this.y = 10
+    this.y = 30
     this.width = 250
-    this.height = 60
+    this.height = 65
     this.imageScore = new Image()
     this.imageScore.src = './assets/coinsbn.png'
     this.imageScore.onload = () => {
@@ -162,21 +163,21 @@ class Bubble {
 }
 
 function generateBubble() {
-  let randomNumber = Math.floor(Math.random() * 100)
+  let randomNumber = Math.floor(Math.random() * 10)
   if (leftBubble.y <= 0) {
     if (frames % randomNumber === 0) {
       leftBubble.y = 630
     }
   }
 
-  let randomNumber2 = Math.floor(Math.random() * 950)
+  let randomNumber2 = Math.floor(Math.random() * 30)
   if (rightBubble.y <= 0) {
     if (frames % randomNumber2 === 0) {
       rightBubble.y = 630
     }
   }
 
-  let randomNumber3 = Math.floor(Math.random() * 800)
+  let randomNumber3 = Math.floor(Math.random() * 80)
   if (middleBubble.y <= 0) {
     if (frames % randomNumber3 === 0) {
       middleBubble.y = 630
@@ -209,10 +210,10 @@ class Coin {
 }
 
 function generateCoins() {
-  if (frames % 400 === 0) {
-    // const coinPositionX = Math.floor(Math.random() * (max - min))
+  if (frames % 50=== 0) {
+    const coinPositionX = Math.floor(Math.random() * 100)
     const coinPositionY = Math.floor(Math.random() * 180)
-    coins.push(new Coin(40, 40, 0, coinPositionY))
+    coins.push(new Coin(40, 40, coinPositionX, coinPositionY))
     //console.log(coins)
   }
 }
@@ -291,12 +292,25 @@ class Platform {
   top() {
     return this.y
   }
+
+ left() {
+    return this.x
+  }
+  right() {
+    return this.x + this.width
+  }
+
+  bottom() {
+    return this.y + this.height
+  }
+
+
 }
 
 function generatePlatforms() {
-  if (frames % 800 === 0) {
-    const platformPositionX = Math.floor(Math.random() * 306)
-    const platformPositionY = Math.floor(Math.random() * 600)
+  if (frames % 200 === 0) {
+    const platformPositionX = Math.floor(Math.random() * 200)
+    const platformPositionY = Math.floor(Math.random() * 300)
     myPlatforms.push(new Platform(platformPositionX, platformPositionY))
   }
 }
@@ -312,7 +326,7 @@ class Character {
   constructor(x, y) {
     this.x = x
     this.y = y
-    this.fall = 1
+    this.fall = 2
     this.width = 120
     this.height = 120
     this.image = new Image()
@@ -353,8 +367,7 @@ class Character {
   bottom() {
     return this.y + this.height
   }
-
-  isTouching(obstacle) {
+ isTouching(obstacle) {
     return (
       this.x < obstacle.x + obstacle.width &&
       this.x + this.width > obstacle.x &&
@@ -366,6 +379,8 @@ class Character {
   isFollowing(tree) {
     return this.y < tree.y + tree.height && this.y + this.height > tree.y
   }
+
+  
 }
 
 document.onkeydown = e => {
@@ -416,27 +431,83 @@ function winStars() {
 function stopFall() {
   myPlatforms.forEach((tree, i) => {
     if (
-      player.isTouching(tree) ||
-      player.isTouching(platform) ||
-      player.isTouching(platform2) ||
-      player.isTouching(platform3)
-    ) {
+      player.isTouching(tree) 
+     
+    )
+     {
       player.fall = 0
-    } else {
-      player.fall = 1
+    } 
+    else {
+      player.fall = 2
     }
+
   })
 }
 
-function finalScreen() {
-  ctx.fillStyle = 'black'
-  ctx.fillRect(0, 0, canvas.width, canvas.height)
+function stopFirsts(){
+   if (player.isTouching(platform)){
+     player.fall = 0
+   }
+
+   else if (  player.isTouching(platform2)){
+ player.fall = 0
+   }
+ else if (player.isTouching(platform3)){
+   player.fall = 0 
+ }
+ else {
+      player.fall = 2
+    }
+
 }
+
+
+
+
+class Fullscreen {
+  constructor(x, y) {
+    this.x = 0
+    this.y = 0
+    this.width = canvas.width
+    this.height = canvas.height
+    this.imagefinal = new Image()
+    this.imagefinal.src = './assets/over.png'
+  }
+
+  draw() {
+  ctx.font = '30px Lexend Deca'
+  ctx.fillStyle = 'white'
+  ctx.fillText(`Score : ${score}`, 130, 60)  
+  ctx.drawImage(this.imagefinal, this.x, this.y, this.width, this.height)
+  }
+}
+
+class Initialscreen {
+  constructor(x, y) {
+    this.x = 0
+    this.y = 0
+    this.width = canvas.width
+    this.height = canvas.height
+    this.imageinitial = new Image()
+    this.imageinitial.src = './assets/start-screen.png'
+  }
+
+  draw() {
+  ctx.drawImage(this.imageinitial, this.x, this.y, this.width, this.height)
+  }
+}
+
+
+
+
+const initial = new Initialscreen
+const final = new Fullscreen
+
 
 function stop() {
   clearInterval(interval)
   interval = null
-  finalScreen()
+ final.draw()
 }
 
 function loses() {
@@ -457,13 +528,12 @@ const canon3 = new Canon(850, 630)
 let leftBubble = new Bubble(220, 630)
 let middleBubble = new Bubble(580, 630)
 let rightBubble = new Bubble(920, 630)
-//const platform = new Platform()
 const coin1 = new Coin(40, 40, 50, 50)
-const platform = new Platform(150, 250)
-const platform2 = new Platform(450, 400)
-const platform3 = new Platform(600, 150)
-const player = new Character(200, 140)
-const scoreB = new scoreBoard()
+const platform = new Platform(300, 250)
+const platform2 = new Platform(550, 400)
+const platform3 = new Platform(700, 150)
+const player = new Character(300, 140)
+const scoreB = new ScoreBoard()
 
 setTimeout(function () {
   platform.fall()
@@ -477,14 +547,12 @@ setTimeout(function () {
   platform3.fall()
 }, 9000)
 
-setTimeout(() => {
-  myPlatforms.forEach(element => {
-    element.fall()
-  })
-}, 100)
+
 
 window.onload = () => {
+
   start()
+
 }
 
 //startButton.onclick=start()
