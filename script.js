@@ -257,7 +257,7 @@ class Star {
 
 function generateStars() {
   if (frames % 180 === 0) {
-    const starPositionY = Math.floor(Math.random() * 100)
+    const starPositionY = Math.floor(Math.random() * 10)
     stars.push(new Star(40, 40, 500, starPositionY))
   }
 }
@@ -312,7 +312,7 @@ class Character {
   constructor(x, y) {
     this.x = x
     this.y = y
-    this.fall = 2
+    this.fall = 1
     this.width = 120
     this.height = 120
     this.image = new Image()
@@ -423,7 +423,7 @@ function stopFall() {
     ) {
       player.fall = 0
     } else {
-      player.fall = 2
+      player.fall = 1
     }
   })
 }
