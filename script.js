@@ -1,5 +1,10 @@
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext('2d')
+const initialScreen=document.getElementById('first-screen')
+const startButton=document.getElementById('start-button')
+const secondButton=document.getElementById('second-button')
+const secondScreen=document.getElementById('second-screen')
+
 
 let frames = 0
 let score = 0
@@ -43,12 +48,16 @@ function update() {
 
 function start() {
   interval = setInterval(update, 1000 / 90)
+  let audio = new Audio('underthesea.mp3')
+   let audio2 = new Audio('Hit-sound.mp3')
+  audio.play();
 }
 
 function updateScore() {
   ctx.font = '30px Lexend Deca'
   ctx.fillStyle = 'white'
   ctx.fillText(`Score : ${score}`, 130, 75)
+  return score
 }
 
 function clearCanvas() {
@@ -463,7 +472,6 @@ function stopFirsts(){
 
 
 
-
 class Fullscreen {
   constructor(x, y) {
     this.x = 0
@@ -475,12 +483,16 @@ class Fullscreen {
   }
 
   draw() {
-  ctx.font = '30px Lexend Deca'
-  ctx.fillStyle = 'white'
-  ctx.fillText(`Score : ${score}`, 130, 60)  
+    
   ctx.drawImage(this.imagefinal, this.x, this.y, this.width, this.height)
+  ctx.font = '70px Lexend Deca'
+  ctx.fillStyle = 'white'
+  ctx.fillText(`Score : ${score}`, 300, 80)
   }
 }
+
+
+const final=new Fullscreen()
 
 class Initialscreen {
   constructor(x, y) {
@@ -493,20 +505,14 @@ class Initialscreen {
   }
 
   draw() {
+    
   ctx.drawImage(this.imageinitial, this.x, this.y, this.width, this.height)
   }
 }
 
-
-
-
-const initial = new Initialscreen
-const final = new Fullscreen
-
-
 function stop() {
-  clearInterval(interval)
-  interval = null
+clearInterval(interval)
+interval = null
  final.draw()
 }
 
@@ -517,6 +523,7 @@ function loses() {
     player.isTouching(middleBubble) ||
     player.y === canvas.height - player.height
   ) {
+    
     stop()
   }
 }
@@ -547,11 +554,26 @@ setTimeout(function () {
   platform3.fall()
 }, 9000)
 
+ startButton.onclick = function () {
+ initialScreen.style.display="none"
+ rules()
+  }
+function rules(){
+secondScreen.style.display="block"
+}
 
+secondButton.onclick = function () {
+ secondScreen.style.display="none"
+ start()
+  }
+
+
+function display(){
+initialScreen.style.display="block"
+}
 
 window.onload = () => {
-
-  start()
+display()
 
 }
 

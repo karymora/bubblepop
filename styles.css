@@ -3,7 +3,44 @@ body {
   background-image: url("http://yablonovka.info/wp-content/uploads/2019/01/subtle-wallpaper-apple-wallpaper-geometry-white-subtle-wallpaper-designs.jpg")
 }
 canvas{
+  position:absolute;
   display:flex;
-  align-items: center
+  align-items: center;
+}
 
+#cotainer{
+  position:relative;
+ 
+}
+
+#start-button{
+  width:1200px;
+  height:50px;
+  color:black;
+  background-color:#FCC464;
+  font-size:20px; 
+}
+
+#second-button{
+  width:1200px;
+  height:50px;
+  color:white;
+  background-color:#5F2773;
+  font-size:20px; 
+}
+
+#first-screen{
+  position:absolute;
+  width:1200px;
+  height:800px;
+  background-color:blue;
+  display:none;
+}
+
+#second-screen{
+  position:absolute;
+  width:1200px;
+  height:800px;
+  background-color:blue;
+  display:none;
 }
