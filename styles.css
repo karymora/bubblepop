@@ -1,16 +1,24 @@
 body {
   font-family: 'Lexend Deca', sans-serif;
-  background-image: url("http://yablonovka.info/wp-content/uploads/2019/01/subtle-wallpaper-apple-wallpaper-geometry-white-subtle-wallpaper-designs.jpg")
+  background-image: url("http://yablonovka.info/wp-content/uploads/2019/01/subtle-wallpaper-apple-wallpaper-geometry-white-subtle-wallpaper-designs.jpg");
+
 }
 canvas{
+  margin: auto;
   position:absolute;
   display:flex;
   align-items: center;
+
 }
 
-#cotainer{
+#container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position:relative;
- 
+  width: 100%;
+  text-align:center;
+  height:100vh;
 }
 
 #start-button{
