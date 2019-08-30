@@ -48,9 +48,7 @@ function update() {
 
 function start() {
   interval = setInterval(update, 1000 / 90)
-  let audio = new Audio('underthesea.mp3')
-   let audio2 = new Audio('Hit-sound.mp3')
-  audio.play();
+   audio.play();
 }
 
 function updateScore() {
@@ -70,7 +68,9 @@ class Board {
     this.y = 0
     this.width = canvas.width
     this.height = canvas.height
-
+    this.audio = new Audio()
+    this.audio.src='./underthesea.mp3'
+    this.audio.loop=true
     this.image = new Image()
     this.image.src = './assets/screen1.png'
     this.image.onload = () => {
@@ -411,6 +411,7 @@ document.onkeydown = e => {
       break
 
     case 13:
+     
       location.reload()
       break
 
@@ -564,6 +565,7 @@ secondScreen.style.display="block"
 
 secondButton.onclick = function () {
  secondScreen.style.display="none"
+ board.audio.play();
  start()
   }
 
