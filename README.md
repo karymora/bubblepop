@@ -6,6 +6,9 @@ before a bubble hits you, ending the game.
 
 
  ![picture alt](https://i.ibb.co/4Prs5ZL/Screen-Shot-2019-08-28-at-2-27-52-PM.png )
+ 
+ ## Technologies ##
+ Made in Javascript and HTML5 with a little help from CSS
 
 
 ## How to play ##
